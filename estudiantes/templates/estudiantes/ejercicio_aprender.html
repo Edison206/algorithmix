@@ -1,0 +1,97 @@
+{% extends 'estudiantes/temas.html' %}
+{% load static %}
+
+{% block contenido %}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Ejercicio</title>
+    <link rel="stylesheet" href="{% static 'css/ejercicioresolverestilo.css' %}">
+
+    <!-- Highlight.js: coloreado de sintaxis de código -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script>hljs.highlightAll();</script>
+</head>
+<body>
+
+<div class="container">
+
+    <div class="enlaces">
+        <a href="{% url 'temas' %}">Temas /</a>
+        <a href="{% url 'ejercicios' temaPrincipal.id %}">{{temaPrincipal.name_tema}} /</a>
+        <a>{{ejercicioEnviado.titulo_ejercicio}}/</a>
+        <a>Aprender</a>
+    </div>
+
+    <!-- HEADER -->
+    <div class="header">
+        <div class="centerHeader">   
+            <h2>Tema: {{temaPrincipal.name_tema}}</h2>
+            <p>{{temaPrincipal.descripcion_tema}}</p>
+        </div>  
+    </div>
+
+    <!-- HEADER / INFO -->
+    <div class="info-box">
+        <h3 class="title">{{ejercicioEnviado.titulo_ejercicio}}</h3>
+
+        <div class="meta">
+            <span>Categoria: {{ejercicioEnviado.categoria_ejercicio}}</span>
+            <span>Dificultad: {{ejercicioEnviado.dificultad_ejercicio}}</span>
+        </div>
+
+        <p class="enunciado">
+            <strong>Enunciado:</strong> {{ aprenderEnviado.enunciado_aprender }}
+        </p>
+    </div>
+
+    <!-- CONTENIDO -->
+<div class="codigos-container">
+
+    <!-- FILA SUPERIOR: C++ y Python lado a lado -->
+    <div class="codigos-fila-superior">
+
+        <!-- CÓDIGO C++ -->
+        <div class="code-section">
+            <div class="code-header cpp">
+                <span>Código C++</span>
+            </div>
+            <pre><code class="language-cpp">{{ aprenderEnviado.ejercicioBien_aprender }}</code></pre>
+        </div>
+
+        <!-- CÓDIGO PYTHON -->
+        <div class="code-section">
+            <div class="code-header python">
+                <span>Código Python</span>
+            </div>
+            <pre><code class="language-python">{{ aprenderEnviado.ejercicioMal_aprender }}</code></pre>
+        </div>
+
+    </div>
+
+    <!-- FILA INFERIOR: Java centrado -->
+    {% if aprenderEnviado.ejercicioJava_aprender %}
+    <div class="codigos-fila-inferior">
+        <div class="code-section">
+            <div class="code-header java">
+                <span>Código Java</span>
+            </div>
+            <pre><code class="language-java">{{ aprenderEnviado.ejercicioJava_aprender }}</code></pre>
+        </div>
+    </div>
+    {% endif %}
+
+</div>
+
+</div>
+
+</body>
+<script src="{% static 'js/respuesta.js' %}"></script>
+</html>
+
+{% endblock %}
+
+

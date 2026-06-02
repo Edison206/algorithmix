@@ -1,0 +1,295 @@
+body {
+    background-color: #0d1117;
+    color: #c9d1d9;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    margin: 0;
+}
+
+/* CONTENEDOR */
+.container {
+    max-width: 100%;
+    margin: auto;
+    padding: 30px;
+}
+
+/* HEADER */
+
+.header {
+    background: #0d1117;
+    border: 1px solid #30363d;
+    margin-top: 30px;
+    margin-bottom: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.centerHeader{
+    width: 90%;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.header h2 {
+    margin: 0;
+}
+
+.header p {
+    color: #8b949e;
+    margin-bottom: 25px;
+    font-size: 14px;
+}
+
+
+/* enlaces */
+.enlaces{
+    width: 100%;
+    height: 40px;
+    display: flex;
+    align-items: center;
+}
+
+.enlaces a{
+    color:#c9d1d9;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+/* CARD */
+.exercise-card {
+    background: #161b22;
+    border: 1px solid #30363d;
+    padding: 20px;
+    margin-bottom: 30px;
+}
+
+/* HEADER EJERCICIO */
+.exercise-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.title-section {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.title-section h3 {
+    margin: 0;
+}
+
+/* ESTADOS */
+.status {
+    padding: 10px 40px;
+    border-radius: 120px;
+    font-size: 14px;
+}
+
+.pending {
+    background: rgb(210, 154, 34);
+    color: #ffffff;
+}
+
+.success {
+    background: rgb(46, 160, 67);
+    color: #ffffff;
+}
+
+/* INFO */
+.exercise-info {
+    margin: 15px 0;
+    color: #8b949e;
+}
+
+/* CODIGO */
+.code-box {
+    background: #0d1117;
+    border: 1px solid #30363d;
+    padding: 15px;
+    font-family: monospace;
+    font-size: 13px;
+    margin-bottom: 15px;
+}
+
+/* BOTONES */
+.actions {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.btn {
+    padding: 10px 40px;
+    border: 1px solid #30363d;
+    background: #21262d;
+    color: #c9d1d9;
+    cursor: pointer;
+}
+
+.btn:hover {
+    background: #30363d;
+}
+
+.learn {
+    border-color: #58a6ff;
+}
+
+.solve {
+    border-color: #3fb950;
+}
+
+/* INTENTOS */
+.attempts {
+    border-top: 1px solid #30363d;
+    padding-top: 10px;
+}
+
+.attempt-header {
+    color: #8b949e;
+    font-size: 13px;
+    margin-bottom: 10px;
+}
+
+/* CADA INTENTO */
+.attempt {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid #21262d;
+    padding: 8px 0;
+}
+
+.dot {
+    width: 8px;
+    height: 8px;
+    background: #ffab58;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.dot.mal {
+    background: #f85149;
+}
+
+.dot.bien {
+    background: #28a745;
+}
+
+.attempt-info {
+    flex: 1;
+}
+
+.attempt-info span {
+    display: block;
+    font-size: 13px;
+}
+
+.attempt-info small {
+    color: #8b949e;
+}
+
+/* BOTÓN VER */
+.btn-view {
+    background: none;
+    border: 1px solid #30363d;
+    color: #c9d1d9;
+    padding: 10px 60px;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+.btn-view:hover {
+    background: #30363d;
+}
+
+
+
+/* ========== CARD APE (PDF) ========== */
+
+.ape-card {
+    border-left: 4px solid #1f6feb;
+}
+
+.ape-badge {
+    background: #1f6feb;
+    color: white;
+    padding: 4px 12px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+/* Tarjeta de PDF (placeholder elegante) */
+.pdf-preview-card {
+    margin: 15px 0;
+    background: linear-gradient(135deg, #1a2332 0%, #0d1117 100%);
+    border: 1px solid #30363d;
+    border-radius: 8px;
+    padding: 30px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.pdf-icon {
+    font-size: 60px;
+    flex-shrink: 0;
+}
+
+.pdf-info h4 {
+    margin: 0 0 8px 0;
+    color: #c9d1d9;
+    font-size: 18px;
+}
+
+.pdf-info p {
+    color: #8b949e;
+    margin: 0 0 8px 0;
+    font-size: 14px;
+}
+
+.pdf-size {
+    background: #21262d;
+    color: #58a6ff;
+    padding: 3px 10px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 500;
+    display: inline-block;
+}
+
+/* Botones */
+.btn.descargar-pdf {
+    background: #238636;
+    border: 1px solid #2ea043;
+    color: white;
+    text-decoration: none;
+    text-align: center;
+    padding: 10px 20px;
+    border-radius: 6px;
+    font-weight: 500;
+    display: inline-block;
+}
+
+.btn.descargar-pdf:hover {
+    background: #2ea043;
+}
+
+.btn.abrir-pdf {
+    background: #1f6feb;
+    border: 1px solid #388bfd;
+    color: white;
+    text-decoration: none;
+    text-align: center;
+    padding: 10px 20px;
+    border-radius: 6px;
+    font-weight: 500;
+    display: inline-block;
+    margin-left: 10px;
+}
+
+.btn.abrir-pdf:hover {
+    background: #388bfd;
+}

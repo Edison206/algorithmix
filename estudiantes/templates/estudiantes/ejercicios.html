@@ -1,0 +1,136 @@
+{% extends 'estudiantes/temas.html' %}
+{% load static %}
+
+{% block contenido %}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Ejercicio Programación</title>
+    <link rel="stylesheet" href="{% static 'css/ejercicios.css' %}">
+</head>
+<body>
+
+<div class="container">
+    
+    <div class="enlaces">
+        <a href="{% url 'temas' %}">Temas /</a>
+        <a href="{% url 'ejercicios' temaPrincipal.id %}">{{temaPrincipal.name_tema}}</a>
+    </div>
+
+    <!-- HEADER -->
+    <div class="header">
+        <div class="centerHeader">   
+            <h2>Tema: {{temaPrincipal.name_tema}}</h2>
+            <p>{{temaPrincipal.descripcion_tema}}</p>
+        </div>  
+    </div>
+
+    {%for ejercicio in ejerciciosEnviados %}
+
+    {% if ejercicio.archivo_pdf_ejercicio %}
+    <!-- =================== CARD APE (PDF) =================== -->
+    <div class="exercise-card ape-card">
+
+        <!-- TITULO -->
+        <div class="exercise-header">
+            <div class="title-section">
+                <h3>📄 {{ejercicio.titulo_ejercicio}}</h3>
+            </div>
+            <span class="status ape-badge">APE</span>
+        </div>
+
+
+        <!-- INFO -->
+        <div class="exercise-info">
+            <p><strong>Descripción:</strong> {{ejercicio.enunciado_ejercicio}}</p>
+        </div>
+
+
+        <!-- VISTA PREVIA PDF (placeholder elegante) -->
+        <div class="pdf-preview-card">
+            <div class="pdf-icon">📄</div>
+            <div class="pdf-info">
+                <h4>Documento PDF disponible</h4>
+                <p>{{ ejercicio.titulo_ejercicio }}</p>
+                <span class="pdf-size">Formato: PDF</span>
+            </div>
+        </div>
+
+        <!-- BOTON DESCARGA -->
+        <div class="actions">
+            <a href="{{ ejercicio.archivo_pdf_ejercicio.url }}" download class="btn descargar-pdf">
+                ⬇ Descargar PDF
+            </a>
+            <a href="{{ ejercicio.archivo_pdf_ejercicio.url }}" target="_blank" class="btn abrir-pdf">
+                🔗 Abrir en nueva pestaña
+            </a>
+        </div>
+
+    </div>
+    {% else %}
+
+    <!-- =================== CARD EJERCICIO NORMAL =================== -->
+    <div class="exercise-card">
+
+        <!-- TITULO -->
+        <div class="exercise-header">
+            <div class="title-section">
+                <h3>{{ejercicio.titulo_ejercicio}}</h3>
+            </div>
+            {% if ejercicio.total_intentos > 0 %}
+            <span class="status success">Completado</span>
+            {% else %}
+            <span class="status pending">Pendiente</span>
+            {% endif %}
+        </div>
+
+        <!-- INFO -->
+        <div class="exercise-info">
+            <p><strong>Enunciado:</strong> {{ejercicio.enunciado_ejercicio}}</p>
+            <p><strong>Dificultad:</strong> {{ejercicio.dificultad_ejercicio}}</p>
+        </div>
+
+        <!-- BOTONES -->
+        <div class="actions">
+            <button class="btn learn" onclick="window.location.href='/ejercicio_aprender/{{ ejercicio.id }}/'">Aprender</button>
+            <button class="btn solve" onclick="window.location.href='/ejercicio_resolver/{{ ejercicio.id }}/'">Resolver Ejercicio</button>
+        </div>
+
+        <!-- INTENTOS -->
+        <div class="attempts">
+
+            <div class="attempt-header">
+                <span>Intentos {{ ejercicio.total_intentos }}/3</span>
+            </div>
+
+            {% for intento in ejercicio.intentos.all %}
+            <div class="attempt">
+                
+                {% if intento.resultado == "0" %}
+                <div class="dot mal"></div>
+                {% elif intento.resultado == "1" %}
+                <div class="dot bien"></div>
+                {% endif %}
+
+                <div class="attempt-info">
+                    <span>Intento {{ forloop.counter }}</span>
+                    <span>{{ intento.respuesta }}</span>
+                    <small>{{ intento.fecha }}</small>
+                </div>
+            </div>
+            {% endfor %}
+
+        </div>
+
+    </div>
+    {% endif %}
+
+    {% endfor %}
+</div>
+
+</body>
+</html>
+
+{% endblock %}

@@ -1,0 +1,78 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Temas</title>
+        <link rel="stylesheet" href="{% static 'css/temasestilo.css' %}">
+
+        
+        <!-- Highlight.js: librería de coloreado de código -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script>
+    </head>
+
+    <body>
+
+    <div class="panel_izquierdo">
+
+        <div class="usuario">
+            <div class="avatar"></div>
+            <h2>{{ request.user.username }}</h2>
+            
+
+            <a href="/logout/">
+                <button class="btn_logout">Cerrar sesión</button>
+            </a>
+        </div>
+
+        <div class="contenedor_temas">
+        {% for unidad, temas in unidades.items %}
+
+                <!-- TITULO DE LA UNIDAD (SOLO UNA VEZ) -->
+                <div class="unidad_titulo">
+                    <h4>{{ unidad }}</h4>
+                </div>
+         
+            {% for tema in temas %}
+                {% if tema.id == temaPrincipal.id %}
+                
+                <div class="tema selected" onclick="window.location.href='/ejercicios/{{ tema.id }}/'">
+                    
+                    <div class="arriba_tema">
+                        <h3>{{ tema.name_tema }}</h3>
+                    </div>
+
+                    <div class="abajo_tema">
+                        <p>{{ tema.ejercicios_completados }}/{{ tema.total_ejercicios }} completado</p>
+                    </div>
+                
+                </div>
+                
+                {%else%}
+
+                <div class="tema" onclick="window.location.href='/ejercicios/{{ tema.id }}/'">
+                    <div class="arriba_tema">
+                        <h3>{{ tema.name_tema }}</h3>
+                    </div>
+
+                    <div class="abajo_tema">
+                        <p>{{ tema.ejercicios_completados }}/{{ tema.total_ejercicios }} completado</p>
+                    </div>
+
+                </div>
+                {%endif%}
+
+            {% endfor %}
+
+        {% endfor %}
+
+        </div>
+
+    </div>
+
+    <div class="panel_derecho">
+        {% block contenido %}
+        <!-- Aquí se carga cada página -->
+        {% endblock %}
+    </div>

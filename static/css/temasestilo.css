@@ -1,0 +1,125 @@
+body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #0d1117;
+    color: #c9d1d9;
+    display: flex;
+}
+
+/* PANEL IZQUIERDO */
+.panel_izquierdo {
+    width: 260px;
+    background-color: #161b22;
+    border-right: 1px solid #30363d;
+    display: flex;
+    flex-direction: column;
+    padding: 20px 15px;
+}
+
+/* USUARIO */
+.usuario {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #30363d;
+    margin-bottom: 20px;
+}
+
+.usuario h2 {
+    font-size: 16px;
+    margin: 0;
+}
+
+.avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #58a6ff, #1f6feb);
+}
+
+/* CONTENEDOR TEMAS */
+.contenedor_temas {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    overflow-y: auto;
+}
+
+/* TARJETA TEMA */
+.tema {
+    background-color: #0d1117;
+    border: 1px solid #30363d;
+    border-radius: 10px;
+    padding: 12px;
+    cursor: pointer;
+    transition: all 0.25s ease;
+}
+
+.selected {
+    background-color: #3bbd8767;
+}
+
+.tema:hover {
+    border-color: #58a6ff;
+    transform: translateY(-2px);
+    box-shadow: 0 0 10px rgba(88, 166, 255, 0.2);
+}
+
+/* PARTE SUPERIOR */
+.arriba_tema h3 {
+    font-size: 14px;
+    margin: 0;
+    color: #e6edf3;
+}
+
+/* PARTE INFERIOR */
+.abajo_tema {
+    margin-top: 10px;
+}
+
+.abajo_tema p {
+    font-size: 12px;
+    color: #8b949e;
+    margin-top: 5px;
+}
+
+/* BARRA DE PROGRESO */
+.progreso_barra {
+    width: 100%;
+    height: 6px;
+    background-color: #21262d;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.progreso {
+    width: 25%; /* puedes hacerlo dinámico */
+    height: 100%;
+    background: linear-gradient(90deg, #3fb950, #2ea043);
+    border-radius: 10px;
+}
+
+.panel_derecho {
+    background-color: #0f1217;
+    width: 75%;
+}
+
+.btn_logout {
+    width: 80%;
+    padding: 6px;
+    margin-top: 8px;
+    margin-left: 20px;
+    background: transparent;
+    border: 1px solid #ff4d4d;
+    color: #ff4d4d;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 13px;
+    transition: 0.3s;
+}
+
+.btn_logout:hover {
+    background: #ff4d4d;
+    color: white;
+}
