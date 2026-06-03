@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import JsonResponse
 from django.contrib.auth import authenticate, login, logout
-from django.db.models import Count
+from django.db.models import Count, Q, Prefetch
 from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import redirect
 from .forms import RegistroForm
@@ -9,13 +9,12 @@ from .forms import RegistroForm
 from .utils import obtener_temas_por_unidad
 from .models import Tema, Ejercicio, Intento, Aprender, Usuario, Retroalimentacion
 
+
 def inicio(request):
     return render(request, 'estudiantes/login.html')
 
 
-
-
-@csrf_exempt 
+@csrf_exempt
 def login_verify(request):
     if request.method == 'POST':
         email = request.POST.get('email')
@@ -27,7 +26,7 @@ def login_verify(request):
             login(request, user)
             return JsonResponse({
                 'success': True,
-                'redirect_url': '/temas/'   # cambia a donde quieras
+                'redirect_url': '/temas/'
             })
         else:
             return JsonResponse({
@@ -39,12 +38,11 @@ def login_verify(request):
 
 
 def temas(request):
-    unidades_ordenadas = obtener_temas_por_unidad()
+    unidades_ordenadas = obtener_temas_por_unidad(request.user)
 
     return render(request, 'estudiantes/temas.html', {
         'unidades': unidades_ordenadas
     })
-
 
 
 @csrf_exempt
@@ -62,16 +60,16 @@ def registro(request):
     return render(request, 'estudiantes/registro.html')
 
 
-
-
-
 def ejercicios(request, id):
-    unidades_ordenadas = obtener_temas_por_unidad()
+    unidades_ordenadas = obtener_temas_por_unidad(request.user)
     tema = Tema.objects.get(id=id)
 
+    # Solo intentos del usuario actual (privacidad por usuario)
+    intentos_usuario = Intento.objects.filter(usuario=request.user)
+
     ejercicios = Ejercicio.objects.filter(tema=tema)\
-        .prefetch_related('intentos')\
-        .annotate(total_intentos=Count('intentos'))
+        .prefetch_related(Prefetch('intentos', queryset=intentos_usuario))\
+        .annotate(total_intentos=Count('intentos', filter=Q(intentos__usuario=request.user)))
 
     return render(request, 'estudiantes/ejercicios.html', {
         'unidades': unidades_ordenadas,
@@ -80,10 +78,9 @@ def ejercicios(request, id):
     })
 
 
-
 def ejercicioAprender(request, id):
-    unidades_ordenadas = obtener_temas_por_unidad()
-    
+    unidades_ordenadas = obtener_temas_por_unidad(request.user)
+
     ejercicio = Ejercicio.objects.get(id=id)
     tema = ejercicio.tema
 
@@ -96,17 +93,19 @@ def ejercicioAprender(request, id):
         'ejercicioEnviado': ejercicio
     })
 
-    
 
 def ejercicioResolver(request, id):
-    unidades_ordenadas = obtener_temas_por_unidad()
+    unidades_ordenadas = obtener_temas_por_unidad(request.user)
 
     ejercicioAux = Ejercicio.objects.get(id=id)
     tema = ejercicioAux.tema
 
+    # Solo intentos del usuario actual (privacidad por usuario)
+    intentos_usuario = Intento.objects.filter(usuario=request.user)
+
     ejercicio = Ejercicio.objects\
-        .prefetch_related('intentos')\
-        .annotate(total_intentos=Count('intentos'))\
+        .prefetch_related(Prefetch('intentos', queryset=intentos_usuario))\
+        .annotate(total_intentos=Count('intentos', filter=Q(intentos__usuario=request.user)))\
         .get(id=id)
 
     return render(request, 'estudiantes/ejercicio_resolver.html', {
@@ -114,7 +113,6 @@ def ejercicioResolver(request, id):
         'temaPrincipal': tema,
         'ejercicioEnviado': ejercicio
     })
-
 
 
 @csrf_exempt
@@ -172,8 +170,6 @@ def agregar_respuesta(request):
             })
 
 
-
 def cerrar_sesion(request):
     logout(request)
     return redirect('/login/')
-
