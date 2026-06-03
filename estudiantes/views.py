@@ -173,3 +173,19 @@ def agregar_respuesta(request):
 def cerrar_sesion(request):
     logout(request)
     return redirect('/login/')
+
+
+
+# ==================== REPORTES ====================
+from .reportes import generar_reporte_progreso
+
+
+def descargar_reporte(request):
+    """
+    Genera y descarga el reporte de progreso académico del usuario actual.
+    Requiere que el usuario esté autenticado.
+    """
+    if not request.user.is_authenticated:
+        return redirect('/login/')
+
+    return generar_reporte_progreso(request.user)
