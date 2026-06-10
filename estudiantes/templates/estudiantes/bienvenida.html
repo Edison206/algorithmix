@@ -1,0 +1,310 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UTADEV ACADEMY - Bienvenido</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #0d1117;
+            color: white;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background:
+                radial-gradient(circle at 20% 30%, rgba(47, 129, 247, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(124, 58, 237, 0.12) 0%, transparent 50%);
+            z-index: 0;
+            animation: gradientShift 15s ease-in-out infinite;
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.15); }
+        }
+
+        .codigo-flotante {
+            position: fixed;
+            font-family: 'JetBrains Mono', monospace;
+            color: rgba(47, 129, 247, 0.08);
+            font-size: 14px;
+            white-space: nowrap;
+            user-select: none;
+            pointer-events: none;
+            z-index: 1;
+            animation: flotarLento 30s linear infinite;
+        }
+
+        @keyframes flotarLento {
+            from { transform: translateY(100vh); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            to { transform: translateY(-100px); opacity: 0; }
+        }
+
+        .container {
+            position: relative;
+            z-index: 10;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 60px 30px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        .marca {
+            margin-bottom: 45px;
+            opacity: 0;
+            animation: aparecer 0.8s ease forwards;
+        }
+
+        .marca-tag {
+            display: inline-block;
+            padding: 6px 14px;
+            background: rgba(47, 129, 247, 0.1);
+            border: 1px solid rgba(47, 129, 247, 0.3);
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 600;
+            color: #58a6ff;
+            letter-spacing: 1.5px;
+            margin-bottom: 18px;
+            text-transform: uppercase;
+        }
+
+        .marca-titulo {
+            font-size: 56px;
+            font-weight: 800;
+            letter-spacing: -1.5px;
+            background: linear-gradient(135deg, #58a6ff 0%, #a371f7 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1.1;
+            display: inline-block;
+        }
+
+        .marca-cursor {
+            display: inline-block;
+            width: 4px;
+            height: 50px;
+            background: #58a6ff;
+            margin-left: 8px;
+            vertical-align: middle;
+            animation: parpadeo 1s step-end infinite;
+        }
+
+        @keyframes parpadeo {
+            from, to { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        .texto-principal {
+            font-size: 17px;
+            line-height: 1.75;
+            color: rgba(255, 255, 255, 0.85);
+            max-width: 780px;
+            margin: 0 auto 35px;
+            opacity: 0;
+            animation: aparecer 0.8s ease 0.3s forwards;
+        }
+
+        .texto-principal .acento-azul { color: #58a6ff; font-weight: 600; }
+        .texto-principal .acento-violeta { color: #a371f7; font-weight: 600; }
+
+        .filosofia {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 28px 32px;
+            margin-bottom: 35px;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            max-width: 780px;
+            opacity: 0;
+            animation: aparecer 0.8s ease 0.6s forwards;
+        }
+
+        .filosofia-titulo {
+            font-size: 12px;
+            font-weight: 700;
+            color: #58a6ff;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 14px;
+        }
+
+        .filosofia-texto {
+            font-size: 15px;
+            line-height: 1.75;
+            color: rgba(255, 255, 255, 0.85);
+        }
+
+        .filosofia-texto strong { color: #a371f7; font-weight: 600; }
+
+        .frase-destacada {
+            position: relative;
+            padding: 28px 35px 28px 50px;
+            margin-bottom: 45px;
+            background: linear-gradient(135deg, rgba(47, 129, 247, 0.08) 0%, rgba(124, 58, 237, 0.08) 100%);
+            border-left: 3px solid #58a6ff;
+            border-radius: 8px;
+            font-style: italic;
+            font-size: 19px;
+            line-height: 1.5;
+            color: white;
+            max-width: 780px;
+            text-align: left;
+            opacity: 0;
+            animation: aparecer 0.8s ease 0.9s forwards;
+        }
+
+        .frase-destacada::before {
+            content: '"';
+            position: absolute;
+            top: -5px;
+            left: 18px;
+            font-size: 60px;
+            color: rgba(47, 129, 247, 0.4);
+            font-family: serif;
+            line-height: 1;
+        }
+
+        .frase-destacada strong {
+            font-style: normal;
+            background: linear-gradient(135deg, #58a6ff 0%, #a371f7 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 700;
+        }
+
+        .frase-firma {
+            display: block;
+            margin-top: 12px;
+            font-size: 12px;
+            font-style: normal;
+            font-weight: 500;
+            color: rgba(255, 255, 255, 0.5);
+            letter-spacing: 0.5px;
+        }
+
+        .boton-comenzar {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 16px 38px;
+            background: linear-gradient(135deg, #2f81f7 0%, #7c3aed 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            box-shadow: 0 8px 24px rgba(47, 129, 247, 0.35);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            opacity: 0;
+            animation: aparecer 0.8s ease 1.2s forwards;
+        }
+
+        .boton-comenzar:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 14px 32px rgba(124, 58, 237, 0.5);
+        }
+
+        .boton-comenzar::after {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%;
+            width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .boton-comenzar:hover::after { left: 100%; }
+
+        .flecha { transition: transform 0.3s ease; font-size: 18px; }
+        .boton-comenzar:hover .flecha { transform: translateX(4px); }
+
+        @keyframes aparecer {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 768px) {
+            .marca-titulo { font-size: 36px; }
+            .marca-cursor { height: 32px; }
+            .texto-principal { font-size: 15px; }
+            .filosofia, .frase-destacada { padding: 22px 20px; }
+            .frase-destacada { font-size: 16px; padding-left: 38px; }
+            .container { padding: 40px 20px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="codigo-flotante" style="top: 10%; left: 5%; animation-delay: 0s;">def resolver(problema): return algoritmo(problema)</div>
+    <div class="codigo-flotante" style="top: 30%; left: 65%; animation-delay: 6s;">if (idea.bien_implementada) return solucion;</div>
+    <div class="codigo-flotante" style="top: 60%; left: 8%; animation-delay: 12s;">while not entiendes: practica()</div>
+    <div class="codigo-flotante" style="top: 85%; left: 55%; animation-delay: 18s;">// El código es arte</div>
+    <div class="codigo-flotante" style="top: 45%; left: 35%; animation-delay: 24s;">class Estudiante extends Curioso { ... }</div>
+
+    <div class="container">
+        <div class="marca">
+            <div class="marca-tag">UTA · FISEI · Software</div>
+            <h1 class="marca-titulo">UTADEV ACADEMY<span class="marca-cursor"></span></h1>
+        </div>
+
+        <p class="texto-principal">
+            Imagina ser un estudiante que no solo aprende teoría… sino que resuelve problemas como
+            todo un programador en acción. Aquí, cada reto te lleva a <span class="acento-azul">pensar, analizar y crear</span>
+            soluciones aplicando la lógica y los algoritmos a situaciones de la vida real.
+            <br><br>
+            A lo largo de <span class="acento-violeta">4 unidades</span>, irás subiendo de nivel:
+            desde entender lo básico hasta dominar desafíos más complejos, siempre con ejercicios
+            interactivos y retroalimentación que te guía paso a paso.
+        </p>
+
+        <div class="filosofia">
+            <div class="filosofia-titulo">⚡ Nuestra Filosofía</div>
+            <p class="filosofia-texto">
+                No buscamos que memorices sintaxis. Buscamos que <strong>desarrolles el pensamiento de un ingeniero</strong>.
+                Aquí aprenderás que un buen programa no es el que más líneas tiene, sino el que mejor resuelve un problema.
+                <br><br>
+                Estamos convencidos de que, entre estas líneas, encontrarás la herramienta que le falta a tu próximo proyecto.
+                Así que, tómate un café, prepara tu entorno de desarrollo y empieza a explorar.
+            </p>
+        </div>
+
+        <div class="frase-destacada">
+            El código es el lienzo, y tú eres el arquitecto.<br>
+            <strong>¡Manos a la obra!</strong>
+            <span class="frase-firma">— El equipo de UTADEV ACADEMY</span>
+        </div>
+
+        <a href="/temas/" class="boton-comenzar">
+            <span>Comenzar a explorar</span>
+            <span class="flecha">→</span>
+        </a>
+    </div>
+</body>
+</html>

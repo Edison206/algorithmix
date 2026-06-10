@@ -1,10 +1,11 @@
 from django.urls import path
-from .views import inicio, login_verify, temas, ejercicios, ejercicioResolver, agregar_respuesta, ejercicioAprender, registro, cerrar_sesion, descargar_reporte
+from .views import inicio, login_verify, temas, ejercicios, ejercicioResolver, agregar_respuesta, ejercicioAprender, registro, cerrar_sesion, descargar_reporte, bienvenida
 
 urlpatterns = [
     path('login/', inicio, name='login'),
     path('login/verify/', login_verify),
     path('registro/', registro, name='registro'),
+    path('bienvenida/', bienvenida, name='bienvenida'),
     path('temas/', temas,  name='temas'),
     path('ejercicios/<int:id>/', ejercicios, name='ejercicios'),
     path('ejercicio_resolver/<int:id>/', ejercicioResolver, name='ejercicio_resolver'),

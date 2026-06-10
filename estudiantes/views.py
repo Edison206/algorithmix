@@ -26,7 +26,7 @@ def login_verify(request):
             login(request, user)
             return JsonResponse({
                 'success': True,
-                'redirect_url': '/temas/'
+                'redirect_url': '/bienvenida/'
             })
         else:
             return JsonResponse({
@@ -53,7 +53,7 @@ def registro(request):
         if form.is_valid():
             user = form.save()
             login(request, user)
-            return JsonResponse({'success': True, 'redirect_url': '/temas/'})
+            return JsonResponse({'success': True, 'redirect_url': '/bienvenida/'})
         else:
             errores = form.errors.as_json()
             return JsonResponse({'success': False, 'error': 'Datos inválidos', 'detalle': errores})
@@ -189,3 +189,17 @@ def descargar_reporte(request):
         return redirect('/login/')
 
     return generar_reporte_progreso(request.user)
+
+
+
+
+#=====================Bienvenida====================
+def bienvenida(request):
+    """
+    Pantalla de bienvenida que se muestra después del login.
+    Requiere que el usuario esté autenticado.
+    """
+    if not request.user.is_authenticated:
+        return redirect('/login/')
+
+    return render(request, 'estudiantes/bienvenida.html')

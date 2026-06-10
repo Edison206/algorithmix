@@ -85,6 +85,55 @@
 
     <div class="panel_derecho">
         {% block contenido %}
-        <!-- Aquí se carga cada página -->
+        <style>
+            .welcome_temas{
+                min-height:100vh; width:100%;
+                display:flex; flex-direction:column;
+                align-items:center; justify-content:center;
+                text-align:center; padding:40px; box-sizing:border-box; gap:18px;
+            }
+            .wt_mark{
+                width:90px; height:90px;
+                display:flex; align-items:center; justify-content:center;
+                font-size:36px; font-weight:700; color:#fff; border-radius:24px;
+                background:linear-gradient(135deg,#2f81f7 0%,#7c3aed 100%);
+                box-shadow:0 12px 40px rgba(47,129,247,0.35); margin-bottom:8px;
+            }
+            .wt_title{
+                font-size:42px; margin:0; font-weight:800;
+                background:linear-gradient(90deg,#2f81f7,#7c3aed);
+                -webkit-background-clip:text; background-clip:text;
+                -webkit-text-fill-color:transparent;
+            }
+            .wt_sub{ color:#8b949e; font-size:18px; margin:0; }
+            .wt_sub span{ color:#c9d1d9; font-weight:600; }
+            .wt_hint{
+                margin-top:14px; display:flex; align-items:center; gap:12px;
+                color:#c9d1d9; font-size:15px; max-width:420px;
+                background:rgba(255,255,255,0.04);
+                border:1px solid rgba(255,255,255,0.08);
+                padding:14px 22px; border-radius:14px;
+            }
+            .wt_arrow{
+                color:#2f81f7; font-size:22px; font-weight:700;
+                animation:wt_move 1.2s ease-in-out infinite;
+            }
+            @keyframes wt_move{
+                0%,100%{ transform:translateX(0); }
+                50%{ transform:translateX(-6px); }
+            }
+            .wt_quote{ margin-top:20px; color:#6e7681; font-style:italic; font-size:14px; }
+        </style>
+
+        <div class="welcome_temas">
+            <div class="wt_mark">&lt;/&gt;</div>
+            <h1 class="wt_title">Hola, {{ request.user.username }}</h1>
+            <p class="wt_sub">Bienvenido de vuelta a <span>ALGORITHMIX</span></p>
+            <div class="wt_hint">
+                <span class="wt_arrow">←</span>
+                Elige un tema del panel izquierdo para empezar a resolver ejercicios
+            </div>
+            <div class="wt_quote">"El código es el lienzo, y tú eres el arquitecto."</div>
+        </div>
         {% endblock %}
     </div>
