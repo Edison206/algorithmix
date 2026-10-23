@@ -36,3 +36,8 @@ class RegistroForm(forms.ModelForm):
         if commit:
             user.save()
         return user
+    def clean_username(self):
+        username = self.cleaned_data.get("username", "").strip()
+        if Usuario.objects.filter(username__iexact=username).exists():
+            raise forms.ValidationError("Ese nombre de usuario ya esta en uso.")
+        return username

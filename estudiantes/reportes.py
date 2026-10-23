@@ -4,7 +4,7 @@ Usa Paragraph dentro de cada celda para que el texto se ajuste sin desbordarse.
 """
 
 from io import BytesIO
-from datetime import datetime
+from django.utils import timezone
 from django.http import HttpResponse
 
 from reportlab.lib.pagesizes import A4
@@ -158,7 +158,7 @@ def generar_reporte_progreso(usuario):
     # ===== 1. DATOS DEL ESTUDIANTE =====
     elementos.append(Paragraph("1. Datos del Estudiante", estilos['Seccion']))
 
-    fecha_actual = datetime.now().strftime("%d/%m/%Y %H:%M")
+    fecha_actual = timezone.localtime().strftime("%d/%m/%Y %H:%M")
     datos_data = [
         [Paragraph('<b>Nombre de usuario:</b>', estilos['CeldaTabla']),
          Paragraph(usuario.username or '—', estilos['CeldaTabla'])],
@@ -289,7 +289,7 @@ def generar_reporte_progreso(usuario):
                 Paragraph(intento.ejercicio.tema.name_tema, estilos['CeldaTabla']),
                 Paragraph(intento.ejercicio.titulo_ejercicio, estilos['CeldaTabla']),
                 Paragraph(intento.ejercicio.dificultad_ejercicio.capitalize(), estilos['CeldaTablaCentro']),
-                Paragraph(intento.fecha.strftime("%d/%m/%Y %H:%M"), estilos['CeldaTablaCentro']),
+                Paragraph(timezone.localtime(intento.fecha).strftime("%d/%m/%Y %H:%M"), estilos['CeldaTablaCentro']),
             ])
 
         tabla_detalle = Table(
@@ -354,7 +354,7 @@ def generar_reporte_progreso(usuario):
     pdf = buffer.getvalue()
     buffer.close()
 
-    nombre_archivo = f"reporte_progreso_{usuario.username}_{datetime.now().strftime('%Y%m%d_%H%M')}.pdf"
+    nombre_archivo = f"reporte_progreso_{usuario.username}_{timezone.localtime().strftime('%Y%m%d_%H%M')}.pdf"
 
     response = HttpResponse(pdf, content_type='application/pdf')
     response['Content-Disposition'] = f'attachment; filename="{nombre_archivo}"'

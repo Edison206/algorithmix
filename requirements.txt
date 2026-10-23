@@ -4,4 +4,3 @@ sqlparse==0.5.5
 tzdata==2025.3
 reportlab==4.5.1
 pillow==12.1.1
-charset-normalizer==3.4.7

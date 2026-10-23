@@ -23,7 +23,6 @@
                     <input type="email" id="email" placeholder="Ingresa tu email" required>
                 </div>
 
-
                 <div class="input-group">
                     <label>Contraseña</label>
                     <input type="password" id="password1" placeholder="Ingresa tu contraseña" required>
@@ -46,15 +45,22 @@
 
     <script>
         function registrar() {
-            const username  = document.getElementById('username').value;
-            const email     = document.getElementById('email').value;
+            const username  = document.getElementById('username').value.trim();
+            const email     = document.getElementById('email').value.trim();
             const password1 = document.getElementById('password1').value;
             const password2 = document.getElementById('password2').value;
+
+            const body = new URLSearchParams({
+                username: username,
+                email: email,
+                password1: password1,
+                password2: password2
+            }).toString();
 
             fetch('/registro/', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                body: `username=${username}&email=${email}&password1=${password1}&password2=${password2}`
+                body: body
             })
             .then(res => res.json())
             .then(data => {
@@ -62,10 +68,17 @@
                     alert('Cuenta creada exitosamente.');
                     window.location.href = data.redirect_url;
                 } else {
-                    alert(data.error);
+                    let mensajes = [];
+                    try {
+                        const errores = JSON.parse(data.detalle || '{}');
+                        for (const campo in errores) {
+                            errores[campo].forEach(e => mensajes.push(e.message));
+                        }
+                    } catch (_) {}
+                    alert(mensajes.length ? mensajes.join('\n') : (data.error || 'Error al registrar'));
                 }
-            });
+            })
+            .catch(() => alert('Error de conexión con el servidor.'));
         }
-        
     </script>
 </html>
